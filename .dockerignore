@@ -1,0 +1,6 @@
+__pycache__/
+.venv/
+*.pyc
+test_app.py
+requirements-dev.txt
+.flake8

@@ -1,0 +1,12 @@
+configuration-as-code
+job-dsl
+workflow-aggregator
+cloudbees-folder
+git
+github-branch-source
+docker-plugin
+generic-webhook-trigger
+credentials-binding
+junit
+timestamper
+pipeline-stage-view
