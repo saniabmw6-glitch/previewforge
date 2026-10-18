@@ -1,0 +1,36 @@
+services:
+  traefik:
+    image: traefik:v3.1
+    container_name: traefik
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=preview
+      - --entrypoints.web.address=:80
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks: [preview]
+
+  jenkins:
+    build: ./jenkins
+    container_name: jenkins
+    user: root                 # needed for Docker socket access (lab setup)
+    ports:
+      - "8080:8080"
+    environment:
+      GITHUB_OWNER: ${GITHUB_OWNER}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD}
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks: [preview]
+
+volumes:
+  jenkins_home:
+
+networks:
+  preview:
+    name: preview
